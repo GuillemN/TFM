@@ -1,5 +1,33 @@
-<p>dashboard works!</p>
 <app-navbar></app-navbar>
-<div class="dashboard-content">
-    <!-- contingut privat -->
+
+
+  <!-- Hero -->
+<section class="hero">
+  <div class="overlay">
+    <h1>Descobreix Andorra</h1>
+    <button class="explore-btn">Explora rutes</button>
   </div>
+</section>
+
+<!-- Categories -->
+<section class="categories">
+  <h2>Categories</h2>
+  <div class="cards">
+    <div class="card" *ngFor="let cat of categories">
+      <div class="card-image" [style.backgroundImage]="'url(' + cat.image + ')'">
+        <div class="card-title">
+          {{ cat.title }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Alpinisme Andorra</p>
+  <div class="icons">
+    <i class="fab fa-twitter"></i>
+    <i class="fab fa-youtube"></i>
+  </div>
+</footer>

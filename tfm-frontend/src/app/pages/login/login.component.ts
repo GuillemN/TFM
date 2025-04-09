@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -27,6 +27,16 @@ export class LoginComponent {
         this.successMessage = "T'has registrat correctament!";
       }
     });
+  }
+  ngOnInit(): void {
+    if (this.auth.isLoggedIn()) {
+      this.router.navigate(['/dashboard']); 
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('registered') === 'true') {
+      this.successMessage = 'Compte creat correctament! Ja pots iniciar sessió.';
+    }
   }
 
   onSubmit() {
