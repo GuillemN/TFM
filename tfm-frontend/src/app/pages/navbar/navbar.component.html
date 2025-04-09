@@ -1,0 +1,11 @@
+<nav class="navbar">
+    <ul class="nav-links">
+      <li><a routerLink="/dashboard">Inici</a></li>
+      <li><a routerLink="/privat">Privat</a></li>
+    </ul>
+  
+    <div class="user-info">
+      <span>Hola, {{ userName }}</span>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </nav>
