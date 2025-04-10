@@ -29,10 +29,10 @@ export class LoginComponent {
     });
   }
   ngOnInit(): void {
-    if (this.auth.isLoggedIn()) {
-      this.router.navigate(['/dashboard']); 
+    if (this.auth.isLoggedIn() && this.router.url === '/login') {
+      this.router.navigate(['/dashboard']);
     }
-
+  
     const params = new URLSearchParams(window.location.search);
     if (params.get('registered') === 'true') {
       this.successMessage = 'Compte creat correctament! Ja pots iniciar sessió.';
@@ -43,7 +43,9 @@ export class LoginComponent {
     this.auth.login({ email: this.email, password: this.password }).subscribe({
       next: () => {
         this.errorMessage = null;
-        this.router.navigate(['/dashboard']);
+        const redirect = localStorage.getItem('redirectAfterLogin') || '/dashboard';
+        localStorage.removeItem('redirectAfterLogin');
+        this.router.navigate([redirect]);
       },
       error: err => {
         console.error('Error de login', err);
