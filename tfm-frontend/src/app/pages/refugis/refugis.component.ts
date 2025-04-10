@@ -1,35 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RefugisService, Refugi } from '../../services/refugis.service';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
+
 
 @Component({
-  selector: 'app-refugis-page',
   standalone: true,
-  imports: [CommonModule],
+  selector: 'app-refugis',
+  imports: [CommonModule, NavbarComponent,FooterComponent],
   templateUrl: './refugis.component.html',
   styleUrls: ['./refugis.component.scss']
 })
-export class RefugisComponent {
-  refugis = [
-    {
-      nom: "Refugi de l'Illa",
-      km: 6.2,
-      desnivell: 580,
-      dificultat: 'Moderada',
-      imatge: '/img/refugis/refugi-illa.jpg'
-    },
-    {
-      nom: "Refugi de Comapedrosa",
-      km: 4.1,
-      desnivell: 850,
-      dificultat: 'Alta',
-      imatge: '/img/refugis/refugi-comapedrosa.jpg'
-    },
-    {
-      nom: "Refugi de Sorteny",
-      km: 3.8,
-      desnivell: 300,
-      dificultat: 'Fàcil',
-      imatge: '/img/refugis/refugi-sorteny.jpg'
-    }
-  ];
+export class RefugisComponent implements OnInit {
+  refugis: Refugi[] = [];
+
+  constructor(private refugisService: RefugisService) {}
+
+  ngOnInit(): void {
+    this.refugisService.getRefugis().subscribe({
+      next: (data) => this.refugis = data,
+      error: (err) => console.error('Error carregant refugis:', err)
+    });
+  }
 }

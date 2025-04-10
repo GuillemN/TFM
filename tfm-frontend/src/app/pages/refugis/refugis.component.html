@@ -1,19 +1,18 @@
+<app-navbar></app-navbar>
 <section class="refugis">
-    <h2>Refugis</h2>
-    <div class="cards">
-      <div class="card" *ngFor="let refugi of refugis">
-        <div
-          class="card-image"
-          [style.backgroundImage]="'url(' + refugi.imatge + ')'">
-          <div class="card-title">
-            {{ refugi.nom }}
-          </div>
-          <div class="card-overlay">
-            <p><strong>Distància:</strong> {{ refugi.km }} km</p>
-            <p><strong>Desnivell:</strong> {{ refugi.desnivell }} m</p>
-            <p><strong>Dificultat:</strong> {{ refugi.dificultat }}</p>
-          </div>
+  <h2>Refugis</h2>
+  <div class="cards">
+    <div class="card" *ngFor="let refugi of refugis">
+      <div
+        class="card-image"
+        [style.backgroundImage]="'url(http://localhost:4200/img/refugis/' + refugi.imatge + ')'">
+        <div class="card-title">{{ refugi.nom }}</div>
+        <div class="card-overlay">
+          <p><strong>Parroquia:</strong> {{ refugi.parroquies }}</p>
+          <p><strong>Capacitat:</strong> {{ refugi.capacitat }}</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+<app-footer></app-footer>
