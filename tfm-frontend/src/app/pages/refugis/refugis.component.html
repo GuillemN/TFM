@@ -1,4 +1,6 @@
 <app-navbar></app-navbar>
+<app-filtre [camps]="filtreCamps" (filtreCanviat)="aplicarFiltre($event)"></app-filtre>
+
 <section class="refugis">
   <h2>Refugis</h2>
   <div class="cards">
