@@ -41,7 +41,8 @@ export class LoginComponent {
 
   onSubmit() {
     this.auth.login({ email: this.email, password: this.password }).subscribe({
-      next: () => {
+      next: (res) => {
+        localStorage.setItem('auth_token', res.token); // 👈 GUARDA EL TOKEN!
         this.errorMessage = null;
         const redirect = localStorage.getItem('redirectAfterLogin') || '/dashboard';
         localStorage.removeItem('redirectAfterLogin');

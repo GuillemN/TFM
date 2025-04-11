@@ -4,17 +4,37 @@
 <section class="refugis">
   <h2>Refugis</h2>
   <div class="cards">
-    <div class="card" *ngFor="let refugi of refugis">
+    <div class="card" *ngFor="let refugi of refugis" (mouseenter)="hoveredRefugi = refugi.id_refugi" (mouseleave)="hoveredRefugi = null">
       <div
         class="card-image"
         [style.backgroundImage]="'url(http://localhost:4200/img/refugis/' + refugi.imatge + ')'">
+        
         <div class="card-title">{{ refugi.nom }}</div>
+    
         <div class="card-overlay">
-          <p><strong>Parroquia:</strong> {{ refugi.parroquies }}</p>
+          <p><strong>Parròquia:</strong> {{ refugi.parroquies }}</p>
           <p><strong>Capacitat:</strong> {{ refugi.capacitat }}</p>
         </div>
+    
+        <!-- 🔘 BOTONS "hover" -->
+        <div class="card-buttons" *ngIf="hoveredRefugi === refugi.id_refugi">
+          <button
+            class="circle wishlist"
+            (click)="toggleStatus(refugi.id_refugi, 'wishlist')"
+            [class.active]="isActive(refugi.id_refugi, 'wishlist')">
+            ❤️
+          </button>
+    
+          <button
+            class="circle done"
+            (click)="toggleStatus(refugi.id_refugi, 'done')"
+            [class.active]="isActive(refugi.id_refugi, 'done')">
+            ✅
+          </button>
+        </div>
+    
       </div>
     </div>
-  </div>
+    </div>
 </section>
 <app-footer></app-footer>

@@ -7,7 +7,8 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class Kernel extends HttpKernel
 {
     protected $middleware = [
-        // Aquí podries afegir middleware globals si calgués
+       
+        \Illuminate\Http\Middleware\HandleCors::class, 
         \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
     ];
 
@@ -22,8 +23,9 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // 👇 Comenta això si tens problemes amb el login per token
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+     
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Http\Middleware\HandleCors::class, // 
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],

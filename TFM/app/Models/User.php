@@ -26,4 +26,8 @@ class User extends Authenticatable
     {
         return $this->contrasenya;
     }
+    public function getAuthIdentifierName()
+    {
+        return 'id_usuari';
+    }
 }
