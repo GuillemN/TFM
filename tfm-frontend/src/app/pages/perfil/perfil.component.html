@@ -1,0 +1,82 @@
+<app-navbar></app-navbar>
+
+<section class="perfil">
+  <div class="bloc">
+    <h2>Refugis que he fet</h2>
+    <div class="cards">
+      <div class="card"
+      *ngFor="let refugi of doneRefugis"
+      (mouseenter)="hoveredRefugi = refugi.id_refugi"
+      (mouseleave)="hoveredRefugi = null">
+ 
+   <a class="card-image"
+      [routerLink]="['/refugis', refugi.id_refugi]"
+      [style.backgroundImage]="'url(http://localhost:4200/img/refugis/' + refugi.imatge + ')'">
+ 
+     <!-- 🔘 BOTÓ MOGUT DINS AQUI -->
+     <div class="card-buttons" *ngIf="hoveredRefugi === refugi.id_refugi" (click)="$event.preventDefault()">
+       <button
+         class="circle done active"
+         (click)="toggleStatus(refugi.id_refugi, 'done'); $event.preventDefault(); $event.stopPropagation()">
+         <img src="/img/status/fet.png" alt="Afegir a fets" />
+       </button>
+     </div>
+ 
+     <div class="card-title">{{ refugi.nom }}</div>
+     <div class="card-overlay">
+       <p><strong>Parròquia:</strong> {{ refugi.parroquies }}</p>
+       <p><strong>Capacitat:</strong> {{ refugi.capacitat }}</p>
+       <span class="badge" [ngClass]="refugi.lliure ? 'lliure' : 'guardat'">
+         {{ refugi.lliure ? 'Lliure' : 'Guardat' }}
+       </span>
+     </div>
+   </a>
+ </div>
+ 
+    </div>
+  </div>
+
+  <div class="bloc">
+    <h2>Refugis que m’agradaria fer</h2>
+    <div class="cards">
+      <div
+      class="card"
+      *ngFor="let refugi of wishlistRefugis"
+      (mouseenter)="hoveredRefugi = refugi.id_refugi"
+      (mouseleave)="hoveredRefugi = null"
+    >
+      <a
+        class="card-image"
+        [routerLink]="['/refugis', refugi.id_refugi]"
+        [style.backgroundImage]="'url(http://localhost:4200/img/refugis/' + refugi.imatge + ')'"
+      >
+        <!-- 🔘 BOTÓ ARA DINS DE LA IMATGE -->
+        <div class="card-buttons" *ngIf="hoveredRefugi === refugi.id_refugi" (click)="$event.preventDefault()">
+          <button
+            class="circle wishlist active"
+            (click)="toggleStatus(refugi.id_refugi, 'wishlist'); $event.preventDefault(); $event.stopPropagation()">
+            <img
+              [src]="isWishlisted(refugi.id_refugi) 
+                      ? '/img/status/cor3.png' 
+                      : '/img/status/cor.png'"
+              alt="Afegir a desitjats"
+            />
+          </button>
+        </div>
+    
+        <div class="card-title">{{ refugi.nom }}</div>
+        <div class="card-overlay">
+          <p><strong>Parròquia:</strong> {{ refugi.parroquies }}</p>
+          <p><strong>Capacitat:</strong> {{ refugi.capacitat }}</p>
+          <span class="badge" [ngClass]="refugi.lliure ? 'lliure' : 'guardat'">
+            {{ refugi.lliure ? 'Lliure' : 'Guardat' }}
+          </span>
+        </div>
+      </a>
+    </div>
+    
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

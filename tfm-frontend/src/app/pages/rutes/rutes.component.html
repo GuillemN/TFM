@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+
+<section class="rutes">
+  <h2>Rutes</h2>
+  <div class="cards">
+    <div
+      class="card"
+      *ngFor="let ruta of rutes"
+      (mouseenter)="hoveredRuta = ruta.id"
+      (mouseleave)="hoveredRuta = null"
+      [routerLink]="['/rutes', ruta.id]"
+      style="cursor: pointer"
+    >
+      <div
+        class="card-image"
+        [style.backgroundImage]="'url(http://localhost:4200/img/rutes/' + ruta.imatge + ')'"      >
+        <div class="card-title">{{ ruta.nom }}</div>
+
+        <div class="card-overlay">
+          <p><strong>Dificultat:</strong> {{ ruta.dificultat }}</p>
+          <p><strong>Distància:</strong> {{ ruta.distancia_km }} km</p>
+          <p><strong>Desnivell:</strong> {{ ruta.desnivell }} m</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

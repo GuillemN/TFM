@@ -15,7 +15,7 @@ export class DashboardComponent {
   categories = [
     {
       title: 'Rutes',
-      route: '/refugis',
+      route: '/rutes',
       description: 'Millors rutes accessibles a tothom',
       image: '/img/rutes.jpg'
     },

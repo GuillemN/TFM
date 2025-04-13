@@ -1,0 +1,197 @@
+.detall {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', sans-serif;
+  
+    h1, h2 {
+      color: #222;
+      margin-bottom: 1rem;
+    }
+  
+    .capcalera {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      align-items: center;
+  
+      img {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 12px;
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+  
+      .info {
+        flex: 1;
+        min-width: 260px;
+  
+        h1 {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
+  
+        .descripcio {
+          font-size: 1rem;
+          color: #444;
+          margin-bottom: 1rem;
+        }
+  
+        .dades {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          font-size: 1rem;
+          font-weight: 500;
+  
+          span {
+            background-color: #f0f0f0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+          }
+        }
+      }
+    }
+  
+    h2 {
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.3rem;
+    }
+  }
+  
+  
+  .previsio-carrusel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 1rem 0;
+  
+    .fletxa {
+      background: white;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0 1rem;
+      z-index: 1;
+  
+      &.esquerra {
+        margin-right: -2rem;
+      }
+  
+      &.dreta {
+        margin-left: -2rem;
+      }
+    }
+  
+    .previsio-carrusel {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 1rem;
+      padding: 1rem 0;
+  
+      .previsio-card {
+        flex: 0 0 auto;
+        min-width: 160px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+    }
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+  
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    background-color: white;
+  
+    &:hover {
+      transform: scale(1.03);
+    }
+  
+    .card-image {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        color: white;
+      
+        .card-title {
+          font-size: 1.3rem;
+          font-weight: bold;
+          margin: 0;
+          padding: 0.5rem 1rem;
+          background: rgba(0, 0, 0, 0.4);
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+          z-index: 2;
+        }
+      
+        .card-overlay {
+          background: rgba(0, 0, 0, 0.4);
+          padding: 0.5rem 1rem;
+          font-size: 0.95rem;
+          color: white;
+          z-index: 2;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+      
+        .card-buttons {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          animation: fadeIn 0.3s ease;
+          z-index: 3;
+      
+          .circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background-color: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+      
+            &:hover {
+              background-color: #eee;
+              transform: scale(1.1);
+            }
+      
+            &.done.active {
+              background-color: #70da73;
+            }
+      
+            img {
+              width: 28px;
+              height: 28px;
+              object-fit: contain;
+            }
+          }
+        }
+      }
+    }

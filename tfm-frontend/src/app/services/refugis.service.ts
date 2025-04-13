@@ -10,6 +10,8 @@ export interface Refugi {
   contacte: string;
   imatge: string;
   parroquies: string;
+  lliure: number;
+  Altura: number; 
 }
 
 @Injectable({
@@ -22,5 +24,11 @@ export class RefugisService {
 
   getRefugis(): Observable<Refugi[]> {
     return this.http.get<Refugi[]>(this.apiUrl);
+  }
+  getRefugimap(id: number): Observable<Refugi> {
+    return this.http.get<Refugi>(`${this.apiUrl}/${id}`);
+  }
+  getRefugiById(id: number): Observable<Refugi> {
+    return this.http.get<Refugi>(`http://localhost:8000/api/refugis/${id}`);
   }
 }

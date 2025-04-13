@@ -5,12 +5,13 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CampFiltre } from '../../components/filtre/filtre-config';
 import { FiltreComponent } from '../../components/filtre/filtre.component';
-import { UserItemStatusService } from '../../services/user-item-status.service'; // ✅ Assegura’t que la ruta és correcta
+import { UserItemStatusService } from '../../services/user-item-status.service'; 
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-refugis',
-  imports: [CommonModule, NavbarComponent, FooterComponent, FiltreComponent],
+  imports: [CommonModule, NavbarComponent, FooterComponent, FiltreComponent, RouterModule ],
   templateUrl: './refugis.component.html',
   styleUrls: ['./refugis.component.scss'],
 })
@@ -34,11 +35,19 @@ export class RefugisComponent implements OnInit {
       ],
     },
     { clau: 'capacitat', etiqueta: 'Capacitat mínima', tipus: 'number' },
+    {
+      clau: 'lliure',
+      etiqueta: 'Disponibilitat',
+      tipus: 'checkbox',
+      opcions: ['Lliure', 'Guardat']
+    },
+
     //{ clau: 'serveis', etiqueta: 'Serveis', tipus: 'checkbox', opcions: ['wifi', 'dutxa', 'restaurant'] }
   ];
 
   hoveredRefugi: number | null = null;
   userStatuses: any[] = [];
+
 
   constructor(
     private refugisService: RefugisService,
@@ -63,12 +72,25 @@ export class RefugisComponent implements OnInit {
 
   aplicarFiltre(filtres: any) {
     this.refugis = this.refugisOriginals.filter((refugi) => {
+      // 🟡 Filtre per parròquia
       if (filtres.parroquia && refugi.parroquies !== filtres.parroquia) {
         return false;
       }
+  
+      // 🟡 Filtre per capacitat mínima
       if (filtres.capacitat && refugi.capacitat < +filtres.capacitat) {
         return false;
       }
+  
+      // ✅ Filtre per disponibilitat (lliure)
+      if (
+        Array.isArray(filtres.lliure) &&
+        filtres.lliure.length > 0 &&
+        !filtres.lliure.includes(+refugi.lliure)
+      ) {
+        return false;
+      }
+  
       return true;
     });
   }
@@ -94,5 +116,8 @@ export class RefugisComponent implements OnInit {
     return this.userStatuses.some(
       (s) => s.item_id === refugiId && s.item_type === 'refugi' && s.status === status
     );
+  }
+  isWishlisted(refugiId: number): boolean {
+    return this.isActive(refugiId, 'wishlist');
   }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Refugi } from './refugis.service';
 
 export interface UserItemStatus {
   id: number;
@@ -35,5 +36,8 @@ export class UserItemStatusService {
 
   getUserStatuses(): Observable<UserItemStatus[]> {
     return this.http.get<UserItemStatus[]>(this.apiUrl);
+  }
+  getRefugisByStatus(status: 'done' | 'wishlist') {
+    return this.http.get<Refugi[]>(`http://localhost:8000/api/user/refugi/${status}`);
   }
 }

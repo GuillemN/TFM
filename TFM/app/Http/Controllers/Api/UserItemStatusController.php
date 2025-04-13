@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserItemStatus;
@@ -22,6 +23,7 @@ class UserItemStatusController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
+        $userId = 1; // 🔧 FIXA A MÀ
 
         try {
             if ($validated['action'] === 'add') {
@@ -57,4 +59,23 @@ class UserItemStatusController extends Controller
 
         return response()->json($items);
     }
+
+    public function getRefugisByStatus(Request $request, string $status)
+{
+    $user = $request->user();
+
+    if (!$user) {
+        return response()->json(['error' => 'Unauthenticated'], 401);
+    }
+
+    $refugis = DB::table('user_item_status')
+        ->join('refugis', 'user_item_status.item_id', '=', 'refugis.id_refugi')
+        ->where('user_item_status.user_id', $user->id_usuari)
+        ->where('user_item_status.item_type', 'refugi')
+        ->where('user_item_status.status', $status)
+        ->select('refugis.*')
+        ->get();
+
+    return response()->json($refugis);
+}
 }
