@@ -1,3 +1,5 @@
+@use '../../../styles/components/card' as *;
+
 .detall {
     padding: 2rem;
     max-width: 1000px;
@@ -106,92 +108,3 @@
       }
     }
   }
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 1rem;
-  }
-  
-  .card {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease;
-    background-color: white;
-  
-    &:hover {
-      transform: scale(1.03);
-    }
-  
-    .card-image {
-        position: relative;
-        width: 100%;
-        height: 250px;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        color: white;
-      
-        .card-title {
-          font-size: 1.3rem;
-          font-weight: bold;
-          margin: 0;
-          padding: 0.5rem 1rem;
-          background: rgba(0, 0, 0, 0.4);
-          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-          z-index: 2;
-        }
-      
-        .card-overlay {
-          background: rgba(0, 0, 0, 0.4);
-          padding: 0.5rem 1rem;
-          font-size: 0.95rem;
-          color: white;
-          z-index: 2;
-          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-        }
-      
-        .card-buttons {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          animation: fadeIn 0.3s ease;
-          z-index: 3;
-      
-          .circle {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: none;
-            background-color: white;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-      
-            &:hover {
-              background-color: #eee;
-              transform: scale(1.1);
-            }
-      
-            &.done.active {
-              background-color: #70da73;
-            }
-      
-            img {
-              width: 28px;
-              height: 28px;
-              object-fit: contain;
-            }
-          }
-        }
-      }
-    }

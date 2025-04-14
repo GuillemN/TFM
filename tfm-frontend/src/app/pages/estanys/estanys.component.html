@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<app-filtre [camps]="filtreCamps" (filtreCanviat)="aplicarFiltre($event)"></app-filtre>
+
+<section class="estanys">
+  <h2>Estanys</h2>
+  <div class="cards">
+    <div class="card" *ngFor="let estany of estanys" 
+         (mouseenter)="hoveredEstany = estany.id_estany" 
+         (mouseleave)="hoveredEstany = null"
+         [routerLink]="['/estanys', estany.id_estany]"
+         style="cursor: pointer">
+      <div class="card-image"
+           [style.backgroundImage]="'url(/img/estanys/' + estany.imatge + ')'">
+
+        <div class="card-title">{{ estany.nom }}</div>
+
+        <div class="card-overlay">
+          <p><strong>Parròquia:</strong> {{ estany.parroquies }}</p>
+          <p><strong>Altura:</strong> {{ estany.altura }} m</p>
+        </div>
+
+        <div class="card-buttons" *ngIf="hoveredEstany === estany.id_estany" 
+             (click)="$event.stopPropagation()">
+          <button
+            class="circle wishlist"
+            (click)="toggleStatus(estany.id_estany, 'wishlist')"
+            [class.active]="isActive(estany.id_estany, 'wishlist')">
+            <img 
+              [src]="isWishlisted(estany.id_estany) 
+                      ? '/img/status/cor3.png' 
+                      : '/img/status/cor_buit.png'" 
+              alt="Afegir a desitjats" />
+          </button>
+
+          <button
+            class="circle done"
+            (click)="toggleStatus(estany.id_estany, 'done')"
+            [class.active]="isActive(estany.id_estany, 'done')">
+            <img src="/img/status/fet.png" alt="Afegir a fets" />
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

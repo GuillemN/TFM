@@ -20,6 +20,7 @@ export const routes: Routes = [
   { path: 'rutes/:id', loadComponent: () => import('./pages/ruta-detall/ruta-detall.component').then(m => m.RutaDetallComponent),canActivate: [AuthGuard] },
   { path: 'pics', loadComponent: () => import('./pages/pics/pics.component').then(m => m.PicsComponent), canActivate: [AuthGuard] },
   { path: 'pics/:id', loadComponent: () => import('./pages/pic-detall/pic-detall.component').then(m => m.PicDetallComponent), canActivate: [AuthGuard] },
+  { path: 'estanys', loadComponent: () => import('./pages/estanys/estanys.component').then(m => m.EstanysComponent), canActivate: [AuthGuard] },
 
 
   // ⛔ Aquesta SEMPRE ha d'anar l'última

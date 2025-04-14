@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\RefugiController;
 use App\Http\Controllers\Api\UserItemStatusController;
 use App\Http\Controllers\Api\RutaController;
 use App\Http\Controllers\Api\PicController;
+use App\Http\Controllers\Api\EstanyController;
 
 
 use App\Http\Controllers\Api\MeteoController;
@@ -32,7 +33,8 @@ Route::get('/refugis/{id}/rutes', [RefugiController::class, 'getRutesPerRefugi']
 Route::get('/pics', [PicController::class, 'index']);
 Route::get('/pics/{id}/rutes', [PicController::class, 'getRutesPerPic']);
 Route::get('/pics/{id}', [App\Http\Controllers\Api\PicController::class, 'getById']);
-
+Route::get('/estanys', [EstanyController::class, 'index']);
+Route::get('/estanys/{id}', [EstanyController::class, 'getById']);
 
 
 
