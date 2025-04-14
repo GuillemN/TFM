@@ -48,6 +48,20 @@
   <div *ngIf="!previsioFiltrada.length">
     Carregant previsió...
   </div>
+
+  <h3>Rutes que passen per aquest refugi</h3>
+<div class="cards" *ngIf="rutesDelRefugi.length">
+  <div class="card" *ngFor="let ruta of rutesDelRefugi" [routerLink]="['/rutes', ruta.id]">
+    <div class="card-image" [style.backgroundImage]="'url(/img/rutes/' + ruta.imatge + ')'">
+      <div class="card-title">{{ ruta.nom }}</div>
+      <div class="card-overlay">
+        <p><strong>Dificultat:</strong> {{ ruta.dificultat }}</p>
+        <p><strong>Distància:</strong> {{ ruta.distancia_km }} km</p>
+        <p><strong>Desnivell:</strong> {{ ruta.desnivell }} m</p>
+      </div>
+    </div>
+  </div>
+</div>
 </section>
 
 <app-footer></app-footer>

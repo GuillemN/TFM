@@ -2,33 +2,33 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Refugi;
+use App\Models\Pic;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
-class RefugiController extends Controller
+class PicController extends Controller
 {
+    // GET /api/pics
     public function index()
     {
-        return response()->json(Refugi::all());
+        // Return all pics as JSON
+        return response()->json(Pic::all());
     }
-    public function getById($id)
-{
-    return Refugi::findOrFail($id);
-}
 
-public function show($id)
-{
-    $refugi = Refugi::select('id', 'nom', 'latitud', 'longitud', 'altitud')->findOrFail($id);
-    return response()->json($refugi);
-}
-public function getRutesPerRefugi($id)
+    // GET /api/pics/{id}
+    public function getById($id)
+    {
+        // Return a single pic by ID
+        $pic = Pic::findOrFail($id);
+        return response()->json($pic);
+    }
+    public function getRutesPerPic($id)
 {
     $rutes = DB::table('punts_ruta')
         ->join('rutes', 'punts_ruta.ruta_id', '=', 'rutes.id')
-        ->where('punts_ruta.tipus', 'Refugis')
+        ->where('punts_ruta.tipus', 'Pics')
         ->where('punts_ruta.tipus_id', $id)
         ->select('rutes.id', 'rutes.nom', 'rutes.imatge', 'rutes.dificultat', 'rutes.distancia_km', 'rutes.desnivell')
         ->distinct()

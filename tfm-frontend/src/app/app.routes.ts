@@ -18,6 +18,9 @@ export const routes: Routes = [
   { path: 'refugi/:id', loadComponent: () => import('./pages/refugi-detall/refugi-detall.component').then(m => m.RefugiDetallComponent), canActivate: [AuthGuard] },
   { path: 'rutes', component: RutesComponent, canActivate: [AuthGuard] },
   { path: 'rutes/:id', loadComponent: () => import('./pages/ruta-detall/ruta-detall.component').then(m => m.RutaDetallComponent),canActivate: [AuthGuard] },
+  { path: 'pics', loadComponent: () => import('./pages/pics/pics.component').then(m => m.PicsComponent), canActivate: [AuthGuard] },
+  { path: 'pics/:id', loadComponent: () => import('./pages/pic-detall/pic-detall.component').then(m => m.PicDetallComponent), canActivate: [AuthGuard] },
+
 
   // ⛔ Aquesta SEMPRE ha d'anar l'última
   { path: '**', redirectTo: 'login' }

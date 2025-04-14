@@ -21,6 +21,27 @@
           <p><strong>Distància:</strong> {{ ruta.distancia_km }} km</p>
           <p><strong>Desnivell:</strong> {{ ruta.desnivell }} m</p>
         </div>
+        <div class="card-buttons" *ngIf="hoveredRuta === ruta.id" (click)="$event.stopPropagation()">
+          <button
+            class="circle wishlist"
+            (click)="toggleStatus(ruta.id, 'wishlist')"
+            [class.active]="isActive(ruta.id, 'wishlist')"
+          >
+            <img
+              [src]="isWishlisted(ruta.id) ? '/img/status/cor3.png' : '/img/status/cor_buit.png'"
+              alt="Afegir a desitjats"
+            />
+          </button>
+        
+          <button
+            class="circle done"
+            (click)="toggleStatus(ruta.id, 'done')"
+            [class.active]="isActive(ruta.id, 'done')"
+          >
+            <img src="/img/status/fet.png" alt="Afegir a fets" />
+          </button>
+        </div>
+        
       </div>
     </div>
   </div>

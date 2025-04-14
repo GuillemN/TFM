@@ -21,13 +21,13 @@ export class DashboardComponent {
     },
     {
       title: 'Pics',
-      route: '/refugis',
+      route: '/pics',
       description: 'Tots els pics del país',
       image: '/img/pics.jpg'
     },
     {
       title: 'Estanys',
-      route: '/refugis',
+      route: '/estanys',
       description: 'Tots els estanys del país',
       image: '/img/estanys.jpg'
     },

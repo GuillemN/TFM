@@ -72,7 +72,7 @@
       >
       <button
       class="circle wishlist"
-      (click)="toggleStatus(punt.tipus_id, getSingularTipus(punt.tipus), 'wishlist'); $event.stopPropagation()"
+      (click)="toggleStatus(punt.tipus_id, punt.tipus, 'wishlist')"
       [class.active]="isActive(punt.tipus_id, punt.tipus.toLowerCase(), 'wishlist')"
     >
           <img
@@ -85,7 +85,7 @@
 
         <button
         class="circle done"
-        (click)="toggleStatus(punt.tipus_id, getSingularTipus(punt.tipus), 'done'); $event.stopPropagation()"
+        (click)="toggleStatus(punt.tipus_id, punt.tipus, 'done')"
 
 
         [class.active]="isActive(punt.tipus_id, punt.tipus.toLowerCase(), 'done')"

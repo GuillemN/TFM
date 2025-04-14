@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Ruta } from './rutes.service';
 
 export interface Refugi {
   id_refugi: number;
@@ -30,5 +31,8 @@ export class RefugisService {
   }
   getRefugiById(id: number): Observable<Refugi> {
     return this.http.get<Refugi>(`http://localhost:8000/api/refugis/${id}`);
+  }
+  getRutesPerRefugi(id: number): Observable<Ruta[]> {
+    return this.http.get<Ruta[]>(`http://localhost:8000/api/refugis/${id}/rutes`);
   }
 }

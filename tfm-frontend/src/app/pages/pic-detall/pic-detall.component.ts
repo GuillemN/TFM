@@ -1,50 +1,50 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Refugi, RefugisService } from '../../services/refugis.service';
-import { MeteoService } from '../../services/meteo.service';
+import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
-import { RefugiMapComponent } from '../refugi-map/refugi-map.component';
+import { Pic, PicsService } from '../../services/pics.service';
+import { MeteoService } from '../../services/meteo.service';
 import { Ruta } from '../../services/rutes.service';
-import { RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router'; 
+import { UserItemStatusService } from '../../services/user-item-status.service'; 
+import { RefugiMapComponent } from '../refugi-map/refugi-map.component';
+
 
 
 @Component({
-  selector: 'app-refugi-detall',
+  selector: 'app-pic-detall',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent, RefugiMapComponent, RouterModule],
-  templateUrl: './refugi-detall.component.html',
-  styleUrls: ['./refugi-detall.component.scss']
+  imports: [CommonModule, NavbarComponent, FooterComponent,RouterModule, RefugiMapComponent ],
+  templateUrl: './pic-detall.component.html',
+  styleUrls: ['./pic-detall.component.scss']
 })
-export class RefugiDetallComponent implements OnInit {
-  // Declare variables for refuge data, forecast and related routes
-  refugi!: Refugi;
+export class PicDetallComponent implements OnInit {
+  pic!: Pic;
   previsio: PrevisioHora[] = [];
   previsioFiltrada: PrevisioHora[] = [];
-  rutesDelRefugi: Ruta[] = [];
+  rutesDelPic: Ruta[] = [];
+  userStatuses: any[] = [];
+  hoveredRuta: number | null = null;
 
-  // Capture reference to the scroll carousel for weather forecast
+
+
   @ViewChild('carrusel') carruselRef!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
-    private refugisService: RefugisService,
-    private meteoService: MeteoService
+    private picsService: PicsService,
+    private meteoService: MeteoService,
+    private userItemStatusService: UserItemStatusService
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-
     if (id) {
-      // 🔹 Load refuge data
-      this.refugisService.getRefugiById(+id).subscribe((data) => {
-        this.refugi = data;
-
-        // Parse coordinates into latitude and longitude
-        const [lat, lon] = this.refugi.coordenades.split(',').map(Number);
-
-        // 🔹 Load weather forecast for the refuge
+      this.picsService.getPicById(+id).subscribe((data) => {
+        this.pic = data;
+        const [lat, lon] = this.pic.coordenades.split(',').map(Number);
+        
         this.meteoService.getForecast(lat, lon).subscribe({
           next: (resposta) => {
             this.previsio = resposta.previsio;
@@ -53,19 +53,20 @@ export class RefugiDetallComponent implements OnInit {
           error: (err) => console.error('Error previsió:', err)
         });
       });
-
-      // 🔹 Load routes that pass through this refuge
-      this.refugisService.getRutesPerRefugi(+id).subscribe({
-        next: (rutes) => this.rutesDelRefugi = rutes,
-        error: (err) => console.error('Error carregant rutes del refugi:', err)
+  
+      this.picsService.getRutesPerPic(+id).subscribe({
+        next: (rutes) => this.rutesDelPic = rutes,
+        error: (err) => console.error('Error carregant rutes del pic:', err)
+      });
+  
+      this.userItemStatusService.getUserStatuses().subscribe((statuses) => {
+        this.userStatuses = statuses;
       });
     }
   }
 
-  // Filter forecast by day: morning and afternoon
   filtrarMatinsITardes(data: PrevisioHora[]): PrevisioHora[] {
     const perDia: { [data: string]: PrevisioHora[] } = {};
-
     for (const entrada of data) {
       if (!entrada.data.includes(' ')) continue;
       const [dia] = entrada.data.split(' ');
@@ -77,7 +78,7 @@ export class RefugiDetallComponent implements OnInit {
     const ultimDia = diesOrdenats[diesOrdenats.length - 1];
     const resultats: PrevisioHora[] = [];
 
-    diesOrdenats.forEach(dia => {
+    diesOrdenats.forEach((dia) => {
       const entrades = perDia[dia];
       if (dia === ultimDia) {
         const preferida = this.mesProperaAHora(entrades, '09:00:00') || this.mesProperaAHora(entrades, '15:00:00');
@@ -93,8 +94,7 @@ export class RefugiDetallComponent implements OnInit {
     return resultats.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
   }
 
-  // Select the closest forecast entry to a target hour
-  private mesProperaAHora(entrades: PrevisioHora[], horaObjectiu: string): PrevisioHora | null {
+  mesProperaAHora(entrades: PrevisioHora[], horaObjectiu: string): PrevisioHora | null {
     const [hObj, mObj] = horaObjectiu.split(':').map(Number);
     const targetMinutes = hObj * 60 + mObj;
 
@@ -117,20 +117,42 @@ export class RefugiDetallComponent implements OnInit {
     return millor;
   }
 
-  // Scroll the forecast carousel
   scrollCarrusel(direccio: number) {
     const el = this.carruselRef.nativeElement;
     const ampladaCard = el.querySelector('.previsio-card')?.offsetWidth || 200;
     el.scrollBy({ left: direccio * (ampladaCard + 16), behavior: 'smooth' });
   }
 
-  // Get icon URL from OpenWeatherMap
   getIconUrl(icon: string): string {
     return `https://openweathermap.org/img/wn/${icon}@2x.png`;
   }
+  toggleStatus(rutaId: number, status: 'wishlist' | 'done') {
+    const isActive = this.isActive(rutaId, status);
+    const action = isActive ? 'remove' : 'add';
+
+    this.userItemStatusService.toggleStatus(rutaId, 'ruta', status, action).subscribe(() => {
+      if (action === 'add') {
+        this.userStatuses.push({ item_id: rutaId, item_type: 'ruta', status });
+      } else {
+        this.userStatuses = this.userStatuses.filter(
+          (s) => !(s.item_id === rutaId && s.item_type === 'ruta' && s.status === status)
+        );
+      }
+    });
+  }
+
+  isActive(rutaId: number, status: 'wishlist' | 'done') {
+    return this.userStatuses.some(
+      (s) => s.item_id === rutaId && s.item_type === 'ruta' && s.status === status
+    );
+  }
+
+  isWishlisted(rutaId: number): boolean {
+    return this.isActive(rutaId, 'wishlist');
+  }
+
 }
 
-// Interface for weather forecast entries
 interface PrevisioHora {
   data: string;
   temperatura: number;

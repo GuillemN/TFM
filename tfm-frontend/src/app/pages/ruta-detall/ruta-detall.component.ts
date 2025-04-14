@@ -137,31 +137,40 @@ export class RutaDetallComponent implements OnInit {
     return ['/', tipusRuta, id];
   }
 
-  toggleStatus(puntId: number, tipus: string, status: 'wishlist' | 'done') {
+  toggleStatus(puntId: number, tipusPlural: string, status: 'wishlist' | 'done') {
+    const tipus = this.getSingularTipus(tipusPlural); // ja retorna en minúscula
     const isActive = this.isActive(puntId, tipus, status);
     const action = isActive ? 'remove' : 'add';
-
+  
     this.userItemStatusService
-      .toggleStatus(puntId, tipus.toLowerCase(), status, action)
+      .toggleStatus(puntId, tipus, status, action)
       .subscribe(() => {
         if (action === 'add') {
-          this.userStatuses.push({ item_id: puntId, item_type: tipus.toLowerCase(), status, user_id: 0, id: 0, created_at: '' });
+          this.userStatuses.push({
+            item_id: puntId,
+            item_type: tipus,
+            status,
+            user_id: 0,
+            id: 0,
+            created_at: '',
+          });
         } else {
           this.userStatuses = this.userStatuses.filter(
-            (s) => !(s.item_id === puntId && s.item_type === tipus.toLowerCase() && s.status === status)
+            (s) => !(s.item_id === puntId && s.item_type === tipus && s.status === status)
           );
         }
       });
   }
 
-  isActive(puntId: number, tipus: string, status: 'wishlist' | 'done') {
+  isActive(puntId: number, tipusPlural: string, status: 'wishlist' | 'done') {
+    const tipus = this.getSingularTipus(tipusPlural);
     return this.userStatuses.some(
-      (s) => s.item_id === puntId && s.item_type === tipus.toLowerCase() && s.status === status
+      (s) => s.item_id === puntId && s.item_type === tipus && s.status === status
     );
   }
-
-  isWishlisted(puntId: number, tipus: string): boolean {
-    return this.isActive(puntId, tipus, 'wishlist');
+  
+  isWishlisted(puntId: number, tipusPlural: string): boolean {
+    return this.isActive(puntId, tipusPlural, 'wishlist');
   }
 
   getSingularTipus(plural: string): string {

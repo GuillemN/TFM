@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\TokenAuthController;
 use App\Http\Controllers\Api\RefugiController;
 use App\Http\Controllers\Api\UserItemStatusController;
 use App\Http\Controllers\Api\RutaController;
+use App\Http\Controllers\Api\PicController;
 
 
 use App\Http\Controllers\Api\MeteoController;
@@ -27,6 +28,12 @@ Route::get('/rutes', [RutaController::class, 'index']);
 Route::get('/rutes/{id}', [RutaController::class, 'getById']);
 Route::get('/rutes/{id}/mapa', [RutaController::class, 'show']);
 Route::get('/rutes/{id}/punts', [RutaController::class, 'getPuntsRuta']);
+Route::get('/refugis/{id}/rutes', [RefugiController::class, 'getRutesPerRefugi']);
+Route::get('/pics', [PicController::class, 'index']);
+Route::get('/pics/{id}/rutes', [PicController::class, 'getRutesPerPic']);
+Route::get('/pics/{id}', [App\Http\Controllers\Api\PicController::class, 'getById']);
+
+
 
 
 Route::middleware('auth:sanctum')->group(function () {

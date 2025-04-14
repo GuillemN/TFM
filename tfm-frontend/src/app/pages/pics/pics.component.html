@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+<app-filtre [camps]="filtreCamps" (filtreCanviat)="aplicarFiltre($event)"></app-filtre>
+
+<section class="pics">
+  <h2>Pics</h2>
+  <div class="cards">
+    <div class="card" *ngFor="let pic of pics"
+         (mouseenter)="hoveredPic = pic.id_pic"
+         (mouseleave)="hoveredPic = null"
+         [routerLink]="['/pics', pic.id_pic]"
+         style="cursor: pointer">
+
+      <div class="card-image" [style.backgroundImage]="'url(/img/pics/' + pic.imatge + ')'">
+        <div class="card-title">{{ pic.nom }}</div>
+        <div class="card-overlay">
+          <p><strong>Altura:</strong> {{ pic.altitud }} m</p>
+        </div>
+
+        <div class="card-buttons" *ngIf="hoveredPic === pic.id_pic" (click)="$event.stopPropagation()">
+          <button class="circle wishlist"
+                  (click)="toggleStatus(pic.id_pic, 'wishlist')"
+                  [class.active]="isActive(pic.id_pic, 'wishlist')">
+            <img [src]="isWishlisted(pic.id_pic) ? '/img/status/cor3.png' : '/img/status/cor_buit.png'" alt="Desitjat">
+          </button>
+          <button class="circle done"
+                  (click)="toggleStatus(pic.id_pic, 'done')"
+                  [class.active]="isActive(pic.id_pic, 'done')">
+            <img src="/img/status/fet.png" alt="Fet">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
