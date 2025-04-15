@@ -1,10 +1,21 @@
 <nav class="navbar">
-  <ul class="nav-links">
-    <li><a routerLink="/dashboard">Inici</a></li>
-    <li><a routerLink="/privat">Privat</a></li>
-  </ul>
+  <div class="navbar-left">
+    <a routerLink="/dashboard">
+      <img src="/img/logo/logo.png" alt="Logo" class="logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a routerLink="/dashboard">Inici</a></li>
+      <li><a routerLink="/rutes">Rutes</a></li>
+      <li><a routerLink="/pics">Pics</a></li>
+      <li><a routerLink="/estanys">Estanys</a></li>
+      <li><a routerLink="/refugis">Refugis</a></li>
+    </ul>
+  </div>
 
   <div class="user-info">
+    <a routerLink="/perfil" class="perfil-link">
+      <i class="fas fa-user"></i> Perfil
+    </a>
     <span>Hola, {{ userName }}</span>
     <button class="logout-button" (click)="logout()">Logout</button>
   </div>

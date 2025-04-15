@@ -35,6 +35,7 @@ Route::get('/pics/{id}/rutes', [PicController::class, 'getRutesPerPic']);
 Route::get('/pics/{id}', [App\Http\Controllers\Api\PicController::class, 'getById']);
 Route::get('/estanys', [EstanyController::class, 'index']);
 Route::get('/estanys/{id}', [EstanyController::class, 'getById']);
+Route::get('/estanys/{id}/rutes', [EstanyController::class, 'getRutesPerEstany']);
 
 
 

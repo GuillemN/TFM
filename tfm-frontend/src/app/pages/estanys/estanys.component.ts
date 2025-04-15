@@ -28,10 +28,11 @@ export class EstanysComponent implements OnInit {
         'Andorra la Vella', 'Sant Julià de Lòria', 'Escaldes-Engordany'
       ]
     },
-    { clau: 'altura', etiqueta: 'Altura mínima', tipus: 'number' }
+    { clau: 'altitud', etiqueta: 'altitud mínima', tipus: 'number' }
   ];
   hoveredEstany: number | null = null;
   userStatuses: any[] = [];
+rutes: any;
 
   constructor(
     private estanysService: EstanysService,
@@ -55,7 +56,7 @@ export class EstanysComponent implements OnInit {
   aplicarFiltre(filtres: any) {
     this.estanys = this.estanysOriginals.filter((estany) => {
       if (filtres.parroquia && estany.parroquies !== filtres.parroquia) return false;
-      if (filtres.altura && estany.altura < +filtres.altura) return false;
+      if (filtres.altitud && estany.altitud < +filtres.altitud) return false;
       return true;
     });
   }

@@ -16,7 +16,7 @@
 
         <div class="card-overlay">
           <p><strong>Parròquia:</strong> {{ estany.parroquies }}</p>
-          <p><strong>Altura:</strong> {{ estany.altura }} m</p>
+          <p><strong>Altura:</strong> {{ estany.altitud }} m</p>
         </div>
 
         <div class="card-buttons" *ngIf="hoveredEstany === estany.id_estany" 
@@ -43,6 +43,7 @@
       </div>
     </div>
   </div>
+  
 </section>
 
 <app-footer></app-footer>
