@@ -34,7 +34,7 @@ export class RefugisComponent implements OnInit {
         'Escaldes-Engordany',
       ],
     },
-    { clau: 'capacitat', etiqueta: 'Capacitat mínima', tipus: 'number' },
+    { clau: 'altura', etiqueta: 'altura mínima', tipus: 'number' },
     {
       clau: 'lliure',
       etiqueta: 'Disponibilitat',
@@ -77,8 +77,8 @@ export class RefugisComponent implements OnInit {
         return false;
       }
   
-      // 🟡 Filtre per capacitat mínima
-      if (filtres.capacitat && refugi.capacitat < +filtres.capacitat) {
+      // 🟡 Filtre per altura mínima
+      if (filtres.altura && refugi.Altura < +filtres.altura) {
         return false;
       }
   

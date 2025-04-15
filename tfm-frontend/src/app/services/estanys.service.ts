@@ -9,9 +9,11 @@ export interface Estany {
   altitud: number;
   imatge: string;
   coordenades: string;
-  parroquies: string;
+  parroquia: string;
   superficie: number;
   artificial: number;
+  descripcio: string;
+
 }
 
 @Injectable({

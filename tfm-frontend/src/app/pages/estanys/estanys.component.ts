@@ -55,7 +55,7 @@ rutes: any;
 
   aplicarFiltre(filtres: any) {
     this.estanys = this.estanysOriginals.filter((estany) => {
-      if (filtres.parroquia && estany.parroquies !== filtres.parroquia) return false;
+      if (filtres.parroquia && estany.parroquia !== filtres.parroquia) return false;
       if (filtres.altitud && estany.altitud < +filtres.altitud) return false;
       return true;
     });

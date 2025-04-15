@@ -5,10 +5,12 @@
     <img [src]="'/img/estanys/' + estany.imatge" [alt]="estany.nom" />
     <div class="info">
       <h1>{{ estany.nom }}</h1>
+      <p class="descripcio"><span> {{ estany.descripcio }} </span></p>
+
       <div class="dades">
         <span>⛰️ {{ estany.altitud }} m</span>
         <span>💧 {{ estany.superficie }} m²</span>
-        <span *ngIf="estany.artificial === 1">🏗 Artificial</span>
+        <span>🏘️ {{ estany.parroquia }} </span>
       </div>
     </div>
   </div>

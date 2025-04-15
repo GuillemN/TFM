@@ -11,6 +11,7 @@ export interface Refugi {
   contacte: string;
   imatge: string;
   parroquies: string;
+  descripcio: string;
   lliure: number;
   Altura: number; 
 }

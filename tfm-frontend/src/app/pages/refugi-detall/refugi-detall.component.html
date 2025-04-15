@@ -5,11 +5,15 @@
     <img [src]="'/img/refugis/' + refugi.imatge" alt="{{ refugi.nom }}" />
     <div class="info">
       <h1>{{ refugi.nom }}</h1>
-      <p class="descripcio">Lorem ipsum dolor sit amet...</p>
+      <p class="descripcio"><span> {{ refugi.descripcio }} </span></p>
       <div class="dades">
         <span>⛰️ {{ refugi.Altura }} m</span>
-        <span>⭐ 4/5</span>
-        <span>📏 13 km</span>
+        <span>🏘️ {{ refugi.parroquies }} </span>
+        <span>
+          🛏️ 
+          {{ refugi.lliure === 1 ? 'Refugi lliure' : 'Refugi guardat' }}
+        </span>
+
       </div>
     </div>
   </div>
