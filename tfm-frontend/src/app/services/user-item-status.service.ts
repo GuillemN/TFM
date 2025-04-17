@@ -40,4 +40,15 @@ export class UserItemStatusService {
   getRefugisByStatus(status: 'done' | 'wishlist') {
     return this.http.get<Refugi[]>(`http://localhost:8000/api/user/refugis/${status}`);
   }
+  getPicsByStatus(status: 'done' | 'wishlist') {
+    return this.http.get<any[]>(`http://localhost:8000/api/user/pics/${status}`);
+  }
+  
+  getEstanysByStatus(status: 'done' | 'wishlist') {
+    return this.http.get<any[]>(`http://localhost:8000/api/user/estanys/${status}`);
+  }
+  
+  getRutesByStatus(status: 'done' | 'wishlist') {
+    return this.http.get<any[]>(`http://localhost:8000/api/user/rutes/${status}`);
+  }
 }

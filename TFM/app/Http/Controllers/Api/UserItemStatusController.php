@@ -1,20 +1,21 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserItemStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\UserItemStatus;
 
 class UserItemStatusController extends Controller
 {
+
     public function toggle(Request $request)
     {
         $validated = $request->validate([
             'item_id' => 'required|integer',
             'item_type' => 'required|string',
-            'status' => 'required|string',
+            'status' => 'required|string|in:wishlist,done',
             'action' => 'required|string|in:add,remove'
         ]);
 
@@ -23,7 +24,6 @@ class UserItemStatusController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
-        $userId = 1; // 🔧 FIXA A MÀ
 
         try {
             if ($validated['action'] === 'add') {
@@ -35,7 +35,7 @@ class UserItemStatusController extends Controller
                 ]);
             } else {
                 UserItemStatus::where([
-                    'user_id' => $user->id_usuari, 
+                    'user_id' => $user->id_usuari,
                     'item_id' => $validated['item_id'],
                     'item_type' => $validated['item_type'],
                     'status' => $validated['status'],
@@ -51,31 +51,60 @@ class UserItemStatusController extends Controller
         return response()->json(['success' => true]);
     }
 
+
     public function list(Request $request)
     {
-        $userId = $request->user()->id_usuari; 
+        $user = $request->user();
 
-        $items = UserItemStatus::where('user_id', $userId)->get();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
 
+        $items = UserItemStatus::where('user_id', $user->id_usuari)->get();
         return response()->json($items);
     }
 
-    public function getRefugisByStatus(Request $request, string $status)
-{
-    $user = $request->user();
 
-    if (!$user) {
-        return response()->json(['error' => 'Unauthenticated'], 401);
+    public function getRefugisByStatus(Request $request, string $status)
+    {
+        return $this->getItemsByStatus($request, $status, 'refugi', 'refugis', 'id_refugi');
     }
 
-    $refugis = DB::table('user_item_status')
-        ->join('refugis', 'user_item_status.item_id', '=', 'refugis.id_refugi')
-        ->where('user_item_status.user_id', $user->id_usuari)
-        ->where('user_item_status.item_type', 'refugi')
-        ->where('user_item_status.status', $status)
-        ->select('refugis.*')
-        ->get();
+ 
+    public function getPicsByStatus(Request $request, string $status)
+    {
+        return $this->getItemsByStatus($request, $status, 'pic', 'pics', 'id_pic');
+    }
 
-    return response()->json($refugis);
-}
+
+    public function getEstanysByStatus(Request $request, string $status)
+    {
+        return $this->getItemsByStatus($request, $status, 'estany', 'estanys', 'id_estany');
+    }
+
+
+    public function getRutesByStatus(Request $request, string $status)
+    {
+        return $this->getItemsByStatus($request, $status, 'ruta', 'rutes', 'id');
+    }
+
+
+    private function getItemsByStatus(Request $request, string $status, string $type, string $table, string $key)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        $items = DB::table('user_item_status')
+            ->join($table, 'user_item_status.item_id', '=', "{$table}.{$key}")
+            ->where('user_item_status.user_id', $user->id_usuari)
+            ->where('user_item_status.item_type', $type)
+            ->where('user_item_status.status', $status)
+            ->select("{$table}.*")
+            ->get();
+
+        return response()->json($items);
+    }
 }

@@ -14,6 +14,7 @@
         <div class="card-title">{{ pic.nom }}</div>
         <div class="card-overlay">
           <p><strong>Altura:</strong> {{ pic.altitud }} m</p>
+          <p><strong>Parroquia:</strong> {{ pic.parroquia }}</p>
         </div>
 
         <div class="card-buttons" *ngIf="hoveredPic === pic.id_pic" (click)="$event.stopPropagation()">

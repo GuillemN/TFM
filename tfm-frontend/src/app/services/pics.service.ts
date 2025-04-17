@@ -10,6 +10,7 @@ export interface Pic {
   descripcio: string;
   coordenades: string;
   imatge: string;
+  parroquia: string;
 }
 
 @Injectable({ providedIn: 'root' })

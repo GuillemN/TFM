@@ -6,6 +6,16 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { RouterModule } from '@angular/router';
 
+type ItemArrayKey =
+  | 'doneRefugis'
+  | 'wishlistRefugis'
+  | 'donePics'
+  | 'wishlistPics'
+  | 'doneEstanys'
+  | 'wishlistEstanys'
+  | 'doneRutes'
+  | 'wishlistRutes';
+
 @Component({
   selector: 'app-perfil',
   standalone: true,
@@ -16,15 +26,23 @@ import { RouterModule } from '@angular/router';
 export class PerfilComponent implements OnInit {
   doneRefugis: Refugi[] = [];
   wishlistRefugis: Refugi[] = [];
-  hoveredRefugi: number | null = null;
+  donePics: any[] = [];
+  wishlistPics: any[] = [];
+  doneEstanys: any[] = [];
+  wishlistEstanys: any[] = [];
+  doneRutes: any[] = [];
+  wishlistRutes: any[] = [];
+
+  hoveredItem: number | null = null;
 
   constructor(private statusService: UserItemStatusService) {}
 
   ngOnInit(): void {
-    this.carregarRefugis();
+    this.carregarDades();
   }
 
-  carregarRefugis() {
+  // ✅ Load all user items marked as "done" or "wishlist"
+  carregarDades() {
     this.statusService.getRefugisByStatus('done').subscribe({
       next: (data) => this.doneRefugis = data,
       error: (err) => console.error('Error carregant refugis fets:', err)
@@ -34,18 +52,87 @@ export class PerfilComponent implements OnInit {
       next: (data) => this.wishlistRefugis = data,
       error: (err) => console.error('Error carregant refugis desitjats:', err)
     });
-  }
 
-  toggleStatus(refugiId: number, status: 'done' | 'wishlist') {
-    this.statusService.toggleStatus(refugiId, 'refugi', status, 'remove').subscribe(() => {
-      if (status === 'done') {
-        this.doneRefugis = this.doneRefugis.filter(r => r.id_refugi !== refugiId);
-      } else {
-        this.wishlistRefugis = this.wishlistRefugis.filter(r => r.id_refugi !== refugiId);
-      }
+    this.statusService.getPicsByStatus('done').subscribe({
+      next: (data) => this.donePics = data,
+      error: (err) => console.error('Error carregant pics fets:', err)
+    });
+
+    this.statusService.getPicsByStatus('wishlist').subscribe({
+      next: (data) => this.wishlistPics = data,
+      error: (err) => console.error('Error carregant pics desitjats:', err)
+    });
+
+    this.statusService.getEstanysByStatus('done').subscribe({
+      next: (data) => this.doneEstanys = data,
+      error: (err) => console.error('Error carregant estanys fets:', err)
+    });
+
+    this.statusService.getEstanysByStatus('wishlist').subscribe({
+      next: (data) => this.wishlistEstanys = data,
+      error: (err) => console.error('Error carregant estanys desitjats:', err)
+    });
+
+    this.statusService.getRutesByStatus('done').subscribe({
+      next: (data) => this.doneRutes = data,
+      error: (err) => console.error('Error carregant rutes fetes:', err)
+    });
+
+    this.statusService.getRutesByStatus('wishlist').subscribe({
+      next: (data) => this.wishlistRutes = data,
+      error: (err) => console.error('Error carregant rutes desitjades:', err)
     });
   }
-  isWishlisted(refugiId: number): boolean {
-    return this.wishlistRefugis.some(r => r.id_refugi === refugiId);
+
+  // ✅ Remove an item from the profile view
+  toggleStatus(itemId: number, itemType: string, status: 'done' | 'wishlist') {
+    this.statusService.toggleStatus(itemId, itemType, status, 'remove').subscribe(() => {
+      const key = this.getArrayKey(itemType, status);
+      this[key] = (this[key] as any[]).filter(item =>
+        this.getItemId(item, itemType) !== itemId
+      );
+    });
+  }
+
+  // ✅ Check if an item is in the wishlist
+  isWishlisted(itemId: number, itemType: string): boolean {
+    const key = this.getArrayKey(itemType, 'wishlist');
+    const list = this[key] as any[];
+
+    return list?.some(item => this.getItemId(item, itemType) === itemId);
+  }
+
+  // 🔧 Compute the correct array key
+  private getArrayKey(type: string, status: 'done' | 'wishlist'): ItemArrayKey {
+    const map: Record<string, string> = {
+      refugi: 'Refugis',
+      pic: 'Pics',
+      estany: 'Estanys',
+      ruta: 'Rutes',
+    };
+    return (status + map[type]) as ItemArrayKey;
+  }
+
+  // 🔧 Compute the correct folder path for images or routes
+  getFolderName(type: string): string {
+    switch (type) {
+      case 'ruta': return 'rutes';
+      case 'refugi': return 'refugis';
+      case 'pic': return 'pics';
+      case 'estany': return 'estanys';
+      default: return type + 's';
+    }
+  }
+
+  // 🔧 Get correct ID from item depending on type
+  getItemId(item: any, type: string): number {
+    return type === 'ruta' ? item.id : item[`id_${type}`] ?? item.id;
+  }
+
+  // 🔘 Handle button click to remove from done/wishlist
+  handleToggleClick(itemId: number, itemType: string, status: string, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.toggleStatus(itemId, itemType, status as 'done' | 'wishlist');
   }
 }
