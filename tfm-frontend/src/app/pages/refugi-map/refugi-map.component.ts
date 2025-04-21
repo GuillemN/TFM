@@ -44,7 +44,7 @@ export class RefugiMapComponent implements OnChanges, AfterViewInit {
   
     const [lat, lon] = this.coordenades
       ? this.coordenades.split(',').map(Number)
-      : [42.5, 1.6]; // posició per defecte si no hi ha coordenades
+      : [42.5, 1.6]; 
   
     if (!this.map) {
       this.map = L.map(this.mapElementRef.nativeElement, {

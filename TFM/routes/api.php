@@ -12,10 +12,11 @@ use App\Http\Controllers\Api\PicController;
 use App\Http\Controllers\Api\EstanyController;
 use App\Http\Controllers\Api\MeteoController;
 
-// 🔐 Rutes públiques
+// Rutes públiques
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [TokenAuthController::class, 'login']);
 Route::get('/refugis', [RefugiController::class, 'index']);
+Route::get('/refugis/{id}', [RefugiController::class, 'getById']);
 Route::get('/meteo', [MeteoController::class, 'getForecast']);
 Route::get('/rutes', [RutaController::class, 'index']);
 Route::get('/rutes/{id}', [RutaController::class, 'getById']);
@@ -29,22 +30,22 @@ Route::get('/estanys', [EstanyController::class, 'index']);
 Route::get('/estanys/{id}', [EstanyController::class, 'getById']);
 Route::get('/estanys/{id}/rutes', [EstanyController::class, 'getRutesPerEstany']);
 
-// 🔐 Rutes protegides per autenticació amb Sanctum
+// Rutes protegides per autenticació amb Sanctum
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    // 🔁 Estats dels ítems
-    Route::post('/user-item-status/toggle', [UserItemStatusController::class, 'toggle']);
-    Route::get('/user-item-status', [UserItemStatusController::class, 'list']);
+// Estats dels ítems
+Route::post('/user-item-status/toggle', [UserItemStatusController::class, 'toggle']);
+Route::get('/user-item-status', [UserItemStatusController::class, 'list']);
 
-    // 🔁 Rutes d’ítems per tipus i estat
-    Route::get('/user/refugis/{status}', [UserItemStatusController::class, 'getRefugisByStatus']);
-    Route::get('/user/pics/{status}', [UserItemStatusController::class, 'getPicsByStatus']);
-    Route::get('/user/estanys/{status}', [UserItemStatusController::class, 'getEstanysByStatus']);
-    Route::get('/user/rutes/{status}', [UserItemStatusController::class, 'getRutesByStatus']);
+// Rutes d’ítems per tipus i estat
+Route::get('/user/refugis/{status}', [UserItemStatusController::class, 'getRefugisByStatus']);
+Route::get('/user/pics/{status}', [UserItemStatusController::class, 'getPicsByStatus']);
+Route::get('/user/estanys/{status}', [UserItemStatusController::class, 'getEstanysByStatus']);
+Route::get('/user/rutes/{status}', [UserItemStatusController::class, 'getRutesByStatus']);
 
-    // 📌 Refugi individual
-    Route::get('/refugis/{id}', [RefugiController::class, 'getById']);
+
+
 });

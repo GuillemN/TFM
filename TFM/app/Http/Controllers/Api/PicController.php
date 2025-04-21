@@ -13,14 +13,12 @@ class PicController extends Controller
     // GET /api/pics
     public function index()
     {
-        // Return all pics as JSON
         return response()->json(Pic::all());
     }
 
     // GET /api/pics/{id}
     public function getById($id)
     {
-        // Return a single pic by ID
         $pic = Pic::findOrFail($id);
         return response()->json($pic);
     }

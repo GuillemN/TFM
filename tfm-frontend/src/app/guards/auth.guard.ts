@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
     if (this.auth.isLoggedIn()) {
       return true;
     } else {
-      // 👇 Recorda on volia anar l'usuari
       localStorage.setItem('redirectAfterLogin', state.url);
       this.router.navigate(['/login']);
       return false;

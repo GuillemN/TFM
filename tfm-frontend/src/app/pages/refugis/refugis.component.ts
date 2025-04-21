@@ -34,7 +34,7 @@ export class RefugisComponent implements OnInit {
         'Escaldes-Engordany',
       ],
     },
-    { clau: 'altura', etiqueta: 'altura mínima', tipus: 'number' },
+    { clau: 'altura', etiqueta: 'Altitud mínima', tipus: 'number' },
     {
       clau: 'lliure',
       etiqueta: 'Disponibilitat',
@@ -42,7 +42,6 @@ export class RefugisComponent implements OnInit {
       opcions: ['Lliure', 'Guardat']
     },
 
-    //{ clau: 'serveis', etiqueta: 'Serveis', tipus: 'checkbox', opcions: ['wifi', 'dutxa', 'restaurant'] }
   ];
 
   hoveredRefugi: number | null = null;
@@ -72,17 +71,17 @@ export class RefugisComponent implements OnInit {
 
   aplicarFiltre(filtres: any) {
     this.refugis = this.refugisOriginals.filter((refugi) => {
-      // 🟡 Filtre per parròquia
+      // Filtre per parròquia
       if (filtres.parroquia && refugi.parroquies !== filtres.parroquia) {
         return false;
       }
   
-      // 🟡 Filtre per altura mínima
+      // Filtre per altura mínima
       if (filtres.altura && refugi.Altura < +filtres.altura) {
         return false;
       }
   
-      // ✅ Filtre per disponibilitat (lliure)
+      // Filtre lliure
       if (
         Array.isArray(filtres.lliure) &&
         filtres.lliure.length > 0 &&

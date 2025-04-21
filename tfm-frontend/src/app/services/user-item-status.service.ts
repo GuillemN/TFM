@@ -16,7 +16,7 @@ export interface UserItemStatus {
   providedIn: 'root',
 })
 export class UserItemStatusService {
-  private apiUrl = 'http://localhost:8000/api/user-item-status'; // Canvia si cal
+  private apiUrl = 'http://localhost:8000/api/user-item-status'; 
 
   constructor(private http: HttpClient) {}
 

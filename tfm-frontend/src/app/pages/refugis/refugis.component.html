@@ -18,13 +18,12 @@
 
         <div class="card-overlay">
           <p><strong>Parròquia:</strong> {{ refugi.parroquies }}</p>
-          <p><strong>Superior a l'alçada:</strong> {{ refugi.Altura  }}</p>
+          <p><strong>Altitud:</strong> {{ refugi.Altura  }}</p>
           <span class="badge" [ngClass]="refugi.lliure ? 'lliure' : 'guardat'">
             {{ refugi.lliure ? 'Lliure' : 'Guardat' }}
           </span>
         </div>
 
-        <!-- 🔘 BOTONS "hover" -->
         <div class="card-buttons" *ngIf="hoveredRefugi === refugi.id_refugi" 
              (click)="$event.stopPropagation()">
           <button

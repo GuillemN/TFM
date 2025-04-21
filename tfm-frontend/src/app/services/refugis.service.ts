@@ -20,7 +20,7 @@ export interface Refugi {
   providedIn: 'root'
 })
 export class RefugisService {
-  private apiUrl = 'http://localhost:8000/api/refugis'; // backend Laravel
+  private apiUrl = 'http://localhost:8000/api/refugis'; 
 
   constructor(private http: HttpClient) {}
 

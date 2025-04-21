@@ -23,6 +23,6 @@ class Ruta extends Model
     ];
 
     protected $casts = [
-        'json' => 'array', // així el JSON es converteix automàticament en array PHP
+        'json' => 'array', 
     ];
 }

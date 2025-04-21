@@ -41,7 +41,7 @@ export class PerfilComponent implements OnInit {
     this.carregarDades();
   }
 
-  // ✅ Load all user items marked as "done" or "wishlist"
+  // Carrega de fets i voldria fer
   carregarDades() {
     this.statusService.getRefugisByStatus('done').subscribe({
       next: (data) => this.doneRefugis = data,
@@ -84,7 +84,7 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  // ✅ Remove an item from the profile view
+  // Esborrar del perfil un element
   toggleStatus(itemId: number, itemType: string, status: 'done' | 'wishlist') {
     this.statusService.toggleStatus(itemId, itemType, status, 'remove').subscribe(() => {
       const key = this.getArrayKey(itemType, status);
@@ -94,7 +94,6 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  // ✅ Check if an item is in the wishlist
   isWishlisted(itemId: number, itemType: string): boolean {
     const key = this.getArrayKey(itemType, 'wishlist');
     const list = this[key] as any[];
@@ -102,7 +101,6 @@ export class PerfilComponent implements OnInit {
     return list?.some(item => this.getItemId(item, itemType) === itemId);
   }
 
-  // 🔧 Compute the correct array key
   private getArrayKey(type: string, status: 'done' | 'wishlist'): ItemArrayKey {
     const map: Record<string, string> = {
       refugi: 'Refugis',
@@ -113,7 +111,6 @@ export class PerfilComponent implements OnInit {
     return (status + map[type]) as ItemArrayKey;
   }
 
-  // 🔧 Compute the correct folder path for images or routes
   getFolderName(type: string): string {
     switch (type) {
       case 'ruta': return 'rutes';
@@ -124,12 +121,10 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  // 🔧 Get correct ID from item depending on type
   getItemId(item: any, type: string): number {
     return type === 'ruta' ? item.id : item[`id_${type}`] ?? item.id;
   }
 
-  // 🔘 Handle button click to remove from done/wishlist
   handleToggleClick(itemId: number, itemType: string, status: string, event: Event): void {
     event.preventDefault();
     event.stopPropagation();

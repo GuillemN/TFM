@@ -2,13 +2,11 @@
     <h2>Alpinisme Andorra</h2>
     <p class="subtitle">Crea un compte nou</p>
   
-    <!-- Missatge d'error general -->
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
   
     <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
-      <!-- NOM -->
       <input
         type="text"
         name="nom"
@@ -21,7 +19,6 @@
         El nom és obligatori.
       </div>
   
-      <!-- EMAIL -->
       <input
         type="email"
         name="email"
@@ -38,7 +35,6 @@
         El correu no és vàlid.
       </div>
   
-      <!-- CONTRASENYA -->
       <div class="password-group">
         <input
           [type]="showPassword ? 'text' : 'password'"
@@ -65,7 +61,6 @@
         Ha de tenir com a mínim 8 caràcters.
       </div>
   
-      <!-- CONFIRMAR CONTRASENYA -->
       <div class="password-group">
         <input
           [type]="showConfirmPassword ? 'text' : 'password'"

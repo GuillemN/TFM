@@ -6,7 +6,7 @@ import { tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api'; // URL del backend Laravel
+  private apiUrl = 'http://localhost:8000/api'; 
   private user: any = null;
 
   constructor(private http: HttpClient) {}

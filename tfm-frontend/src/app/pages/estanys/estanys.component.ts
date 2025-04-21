@@ -28,7 +28,7 @@ export class EstanysComponent implements OnInit {
         'Andorra la Vella', 'Sant Julià de Lòria', 'Escaldes-Engordany'
       ]
     },
-    { clau: 'altitud', etiqueta: 'altitud mínima', tipus: 'number' }
+    { clau: 'altitud', etiqueta: 'Altitud mínima', tipus: 'number' }
   ];
   hoveredEstany: number | null = null;
   userStatuses: any[] = [];

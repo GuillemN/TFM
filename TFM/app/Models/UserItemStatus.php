@@ -16,7 +16,6 @@ class UserItemStatus extends Model
         'status',
     ];
 
-    // Si algun dia fas relació polimòrfica:
     public function item(): MorphTo
     {
         return $this->morphTo(__FUNCTION__, 'item_type', 'item_id');

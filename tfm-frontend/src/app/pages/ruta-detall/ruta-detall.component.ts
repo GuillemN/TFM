@@ -37,7 +37,6 @@ export class RutaDetallComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
   
-    // 🔹 Cridem sempre a userStatuses
     this.userItemStatusService.getUserStatuses().subscribe((statuses) => {
       this.userStatuses = statuses;
     });
@@ -138,7 +137,7 @@ export class RutaDetallComponent implements OnInit {
   }
 
   toggleStatus(puntId: number, tipusPlural: string, status: 'wishlist' | 'done') {
-    const tipus = this.getSingularTipus(tipusPlural); // ja retorna en minúscula
+    const tipus = this.getSingularTipus(tipusPlural); 
     const isActive = this.isActive(puntId, tipus, status);
     const action = isActive ? 'remove' : 'add';
   

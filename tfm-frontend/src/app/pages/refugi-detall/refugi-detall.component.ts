@@ -18,13 +18,11 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./refugi-detall.component.scss']
 })
 export class RefugiDetallComponent implements OnInit {
-  // Declare variables for refuge data, forecast and related routes
   refugi!: Refugi;
   previsio: PrevisioHora[] = [];
   previsioFiltrada: PrevisioHora[] = [];
   rutesDelRefugi: Ruta[] = [];
 
-  // Capture reference to the scroll carousel for weather forecast
   @ViewChild('carrusel') carruselRef!: ElementRef;
 
   constructor(
@@ -37,14 +35,11 @@ export class RefugiDetallComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
-      // 🔹 Load refuge data
       this.refugisService.getRefugiById(+id).subscribe((data) => {
         this.refugi = data;
 
-        // Parse coordinates into latitude and longitude
         const [lat, lon] = this.refugi.coordenades.split(',').map(Number);
 
-        // 🔹 Load weather forecast for the refuge
         this.meteoService.getForecast(lat, lon).subscribe({
           next: (resposta) => {
             this.previsio = resposta.previsio;
@@ -54,7 +49,6 @@ export class RefugiDetallComponent implements OnInit {
         });
       });
 
-      // 🔹 Load routes that pass through this refuge
       this.refugisService.getRutesPerRefugi(+id).subscribe({
         next: (rutes) => this.rutesDelRefugi = rutes,
         error: (err) => console.error('Error carregant rutes del refugi:', err)
@@ -62,7 +56,6 @@ export class RefugiDetallComponent implements OnInit {
     }
   }
 
-  // Filter forecast by day: morning and afternoon
   filtrarMatinsITardes(data: PrevisioHora[]): PrevisioHora[] {
     const perDia: { [data: string]: PrevisioHora[] } = {};
 
@@ -93,7 +86,6 @@ export class RefugiDetallComponent implements OnInit {
     return resultats.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
   }
 
-  // Select the closest forecast entry to a target hour
   private mesProperaAHora(entrades: PrevisioHora[], horaObjectiu: string): PrevisioHora | null {
     const [hObj, mObj] = horaObjectiu.split(':').map(Number);
     const targetMinutes = hObj * 60 + mObj;
@@ -117,20 +109,17 @@ export class RefugiDetallComponent implements OnInit {
     return millor;
   }
 
-  // Scroll the forecast carousel
   scrollCarrusel(direccio: number) {
     const el = this.carruselRef.nativeElement;
     const ampladaCard = el.querySelector('.previsio-card')?.offsetWidth || 200;
     el.scrollBy({ left: direccio * (ampladaCard + 16), behavior: 'smooth' });
   }
 
-  // Get icon URL from OpenWeatherMap
   getIconUrl(icon: string): string {
     return `https://openweathermap.org/img/wn/${icon}@2x.png`;
   }
 }
 
-// Interface for weather forecast entries
 interface PrevisioHora {
   data: string;
   temperatura: number;

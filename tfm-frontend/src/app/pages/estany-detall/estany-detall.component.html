@@ -54,7 +54,6 @@
     
     <div class="card-image" [style.backgroundImage]="'url(/img/rutes/' + ruta.imatge + ')'">
       
-      <!-- Botons -->
       <div class="card-buttons" *ngIf="hoveredRuta === ruta.id" (click)="$event.stopPropagation()">
         <button class="circle wishlist" 
                 (click)="toggleStatus(ruta.id, 'wishlist'); $event.preventDefault()"

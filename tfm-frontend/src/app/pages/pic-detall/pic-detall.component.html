@@ -7,8 +7,9 @@
       <h1>{{ pic.nom }}</h1>
       <p class="descripcio">{{ pic.descripcio }}</p>
       <div class="dades">
-        <span>⛰️ {{ pic.altitud }} m</span>
         <span>🏘️ {{ pic.parroquia }} </span>
+        <span>⛰️ {{ pic.altitud }} m</span>
+
       </div>
     </div>
   </div>
@@ -54,7 +55,6 @@
       
       <div class="card-image" [style.backgroundImage]="'url(/img/rutes/' + ruta.imatge + ')'">
 
-        <!-- Botons wishlist + done -->
         <div class="card-buttons" *ngIf="hoveredRuta === ruta.id" (click)="$event.stopPropagation()">
           <button class="circle wishlist" 
                   (click)="toggleStatus(ruta.id, 'wishlist'); $event.preventDefault()"

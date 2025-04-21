@@ -28,7 +28,7 @@
     }
 
     .logo {
-      height: 80px; // mateix tamany que navbar
+      height: 80px; 
       width: auto;
     }
   }
@@ -64,15 +64,15 @@
       }
 
       &.twitter:hover {
-        color: #1da1f2; // blau Twitter
+        color: #1da1f2; 
       }
 
       &.instagram:hover {
-        color: #e1306c; // rosa Instagram
+        color: #e1306c; 
       }
 
       &.youtube:hover {
-        color: #ff0000; // vermell YouTube
+        color: #ff0000; 
       }
     }
   }
