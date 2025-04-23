@@ -2,7 +2,9 @@
 <app-filtre [camps]="filtreCamps" (filtreCanviat)="aplicarFiltre($event)"></app-filtre>
 
 <section class="pics">
-  <h2>Pics</h2>
+  <div class="titol-wrapper">
+    <h2 class="titol-seccio">Pics</h2>
+  </div>
   <div class="cards">
     <div class="card" *ngFor="let pic of pics"
          (mouseenter)="hoveredPic = pic.id_pic"

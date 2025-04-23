@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\RutaController;
 use App\Http\Controllers\Api\PicController;
 use App\Http\Controllers\Api\EstanyController;
 use App\Http\Controllers\Api\MeteoController;
+use App\Http\Controllers\Api\ViaFerradaController;
 
 // Rutes públiques
 Route::post('/register', [RegisteredUserController::class, 'store']);
@@ -29,6 +30,8 @@ Route::get('/pics/{id}/rutes', [PicController::class, 'getRutesPerPic']);
 Route::get('/estanys', [EstanyController::class, 'index']);
 Route::get('/estanys/{id}', [EstanyController::class, 'getById']);
 Route::get('/estanys/{id}/rutes', [EstanyController::class, 'getRutesPerEstany']);
+Route::get('/vies-ferrades', [ViaFerradaController::class, 'index']);
+Route::get('/vies-ferrades/{id}', [ViaFerradaController::class, 'getById']);
 
 // Rutes protegides per autenticació amb Sanctum
 Route::middleware('auth:sanctum')->group(function () {

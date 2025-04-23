@@ -3,6 +3,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RefugisComponent } from './pages/refugis/refugis.component';
 import { RutesComponent } from './pages/rutes/rutes.component';
+import { ViesFerradesComponent } from './pages/vies-ferrades/vies-ferrades.component';  
+
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,6 +21,8 @@ export const routes: Routes = [
   { path: 'pics/:id', loadComponent: () => import('./pages/pic-detall/pic-detall.component').then(m => m.PicDetallComponent), canActivate: [AuthGuard] },
   { path: 'estanys', loadComponent: () => import('./pages/estanys/estanys.component').then(m => m.EstanysComponent), canActivate: [AuthGuard] },
   { path: 'estanys/:id', loadComponent: () => import('./pages/estany-detall/estany-detall.component').then(m => m.EstanyDetallComponent), canActivate: [AuthGuard] },
+  { path: 'vies-ferrades', component: ViesFerradesComponent, canActivate: [AuthGuard] },
+  { path: 'vies-ferrades/:id', loadComponent: () => import('./pages/vies-ferrades-detall/vies-ferrades-detall.component').then(m => m.ViesFerradesDetallComponent), canActivate: [AuthGuard] },
 
   // Sempres ha de ser l'ultima
   { path: '**', redirectTo: 'login' }

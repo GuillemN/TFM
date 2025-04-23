@@ -130,4 +130,27 @@
   
 
 
- 
+  .titol-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+.titol-seccio {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    margin: 3rem 0 2rem 0;
+    position: relative;
+    display: inline-block;
+    color: #1f2937;
+  
+    &::after {
+      content: '';
+      display: block;
+      width: 60%;
+      height: 4px;
+      background: linear-gradient(90deg, #4f9cff, #2563eb);
+      margin: 0.5rem auto 0 auto;
+      border-radius: 2px;
+    }
+  }

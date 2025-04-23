@@ -2,7 +2,9 @@
 <app-filtre [camps]="filtreCamps" (filtreCanviat)="aplicarFiltre($event)"></app-filtre>
 
 <section class="refugis">
-  <h2>Refugis</h2>
+  <div class="titol-wrapper">
+    <h2 class="titol-seccio">Refugis</h2>
+  </div>
   <div class="cards">
     <div class="card" *ngFor="let refugi of refugis" 
          (mouseenter)="hoveredRefugi = refugi.id_refugi" 

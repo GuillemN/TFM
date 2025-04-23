@@ -48,7 +48,7 @@ export class DashboardComponent {
     },
     {
       title: 'Vies ferrades',
-      route: '/refugis',
+      route: '/vies-ferrades',
       description: 'Totes les vies ferrades',
       image: '/img/vies-ferrades.jpg'
     },

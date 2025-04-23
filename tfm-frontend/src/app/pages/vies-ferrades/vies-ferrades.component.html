@@ -1,0 +1,57 @@
+<app-navbar></app-navbar>
+<app-filtre [camps]="filtreCamps" (filtreCanviat)="aplicarFiltre($event)"></app-filtre>
+
+<section class="vies-ferrades">
+  <div class="titol-wrapper">
+    <h2 class="titol-seccio">Vies Ferrades</h2>
+  </div>
+  <div class="cards">
+    <div
+      class="card"
+      *ngFor="let via of vies"
+      (mouseenter)="hoveredVia = via.id_via_ferrada"
+      (mouseleave)="hoveredVia = null"
+      [routerLink]="['/vies-ferrades', via.id_via_ferrada]"
+      style="cursor: pointer"
+    >
+      <div
+        class="card-image"
+        [style.backgroundImage]="'url(http://localhost:4200/img/vies-ferrades/' + via.imatge + ')'"
+      >
+        <div class="card-title">{{ via.nom }}</div>
+        <div class="card-overlay">
+          <p><strong>Dificultat:</strong> {{ via.dificultat }}</p>
+          <p><strong>Desnivell:</strong> {{ via.desnivell }} m</p>
+          <p><strong>Parròquia:</strong> {{ via.Parroquia }}</p>
+          <span class="badge" [ngClass]="via.estat === 'oberta' ? 'lliure' : 'guardat'">
+            {{ via.estat }}
+          </span>
+        </div>
+
+        <div class="card-buttons" *ngIf="hoveredVia === via.id_via_ferrada" (click)="$event.stopPropagation()">
+          <button
+            class="circle wishlist"
+            (click)="toggleStatus(via.id_via_ferrada, 'wishlist')"
+            [class.active]="isActive(via.id_via_ferrada, 'wishlist')"
+          >
+            <img
+              [src]="isWishlisted(via.id_via_ferrada)
+                        ? '/img/status/cor3.png'
+                        : '/img/status/cor_buit.png'"
+              alt="Afegir a desitjats"
+            />
+          </button>
+          <button
+            class="circle done"
+            (click)="toggleStatus(via.id_via_ferrada, 'done')"
+            [class.active]="isActive(via.id_via_ferrada, 'done')"
+          >
+            <img src="/img/status/fet.png" alt="Afegir a fets" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
